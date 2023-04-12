@@ -24,7 +24,7 @@ void set_title_bar(char *);
 void display(void);
 
 
-//void get_key(void);
+void get_key(void);
 typedef unsigned short int keybits;
 
 int register_keyhandler( void(*f)(keybits) );
