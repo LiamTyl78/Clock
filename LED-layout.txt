@@ -1,0 +1,54 @@
+LED CLOCK LAYOUT
+
+Here is how the LEDs are laid out:
+
+      ####    ####       ####     ####       ####     ####  
+     #    #  #    #     #    #   #    #     #    #   #    #   AM
+     #    #  #    #  #  #    #   #    #  #  #    #   #    # 
+      ####    ####       ####     ####       ####     ####    PM
+     #    #  #    #  #  #    #   #    #  #  #    #   #    # 
+     #    #  #    #     #    #   #    #     #    #   #    #   24H
+      ####    ####       ####     ####       ####     ####   
+
+Digit 0 is on the left, and Digit 5 is the one on the right.
+
+
+Each digit is laid out like this:
+
+    3333
+   2    4
+   2    4
+    5555 
+   1    6
+   1    6
+    0000  7
+
+The Most Significant Bit (MSB) is on the left.  So if you set
+one of the digits to 0x80, you'll get just the decimal point.
+If you set it to 0x08, you'll get only the center horizonal bar.
+
+To show a '1', you need to turn on bits 4 and 6; in binary, you
+need: 01010000 (remember we start counting at zero, so the rightmost
+bit is bit zero).  In Hex, that gives 0x50.
+
+
+'Digit 7' is not really a digit: it's used for the colons and the
+AM/PM/24H/Date indicators.
+
+The bit values are:
+
+    AM indicator:    0x08
+    PM indicator:    0x04
+    24H indicator:   0x02
+    Date indicator:  0x01
+
+    upper-left dot:  0x80
+    lower-left dot:  0x40
+    upper-right dot: 0x20
+    lower-right dot: 0x10
+
+So, for example, setting digit 7 to '0xF4' would turn on all four dots
+and illuminate the 'PM' indicator.
+
+'Digit 6' is reserved by the display manufacturer for some reason they
+won't tell us.  Don't mess with it.
