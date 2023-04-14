@@ -1,6 +1,6 @@
 # Makefile for the clock project
 #
-# Darren Provine, 17 July 2009
+# Liam Tyler, Cory Lillis, Andy Richmond, 13 April 2023
 
 PROGRAM = clock
 SOURCES = clock.c model.c view.c

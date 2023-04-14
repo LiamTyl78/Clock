@@ -1,8 +1,8 @@
 /* view.c -- view module for clock project (the V in MVC)
  *
- * Darren Provine, 17 July 2009
+ * Liam Tyler, Cory Lillis, Andy Richmond, 13 April 2023
  *
- * Copyright (C) Darren Provine, 2009-2019, All Rights Reserved
+ * Copyright (C) Liam Tyler, Cory Lillis, Andy Richmond, 2009-2019, All Rights Reserved
  */
 
 #include "clock.h"

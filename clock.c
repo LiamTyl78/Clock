@@ -1,8 +1,8 @@
 /* clock.c -- controller part of the clock project
  *
- * Darren Provine, 17 July 2009
+ * Liam Tyler, Cory Lillis, Andy Richmond, 13 April 2023
  *
- * Copyright (C) Darren Provine, 2009-2023, All Rights Reserved
+ * Copyright (C) Liam Tyler, Cory Lillis, Andy Richmond, 2009-2023, All Rights Reserved
  */
 
 #include "clock.h"
