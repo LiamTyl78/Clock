@@ -1,8 +1,8 @@
 /* view.c -- view module for clock project (the V in MVC)
  *
- * Darren Provine, 17 July 2009
+ * Liam Tyler, Cory Lillis, Andy Richmond, 13 April 2023
  *
- * Copyright (C) Darren Provine, 2009-2019, All Rights Reserved
+ * Copyright (C) Liam Tyler, Cory Lillis, Andy Richmond, 2009-2019, All Rights Reserved
  */
 
 #include "clock.h"
@@ -39,7 +39,7 @@ char * make_timestring (struct tm *dateinfo)
 {
     // Declaring the pointer like this can lead to crashes!
     // We'll see how to fix it in class.  NEVER DO THIS!
-    char *timeformat; // see strftime(3)
+    char *timeformat = "(no format)"; // see strftime(3)
 
     /* If not in LED mode, return the string as it should be printed.
      *   '10/31/2023 dt' (date of Hallowe'en) or '12:34:56 am'.
@@ -50,12 +50,24 @@ char * make_timestring (struct tm *dateinfo)
      *    '123456a' (12:34:56 am).
      */
     if ( view_props & DATE_MODE ) {
-
-    } else {
+        if(view_props & LED_MODE){
+                timeformat = "%_m%d%y dt";
+            }else{
+                timeformat = "%_m/%d/%Y dt";
+            }
+    } else {    
         if ( view_props & AMPM_MODE ) {
-            // do something
+            if(view_props & LED_MODE){
+                timeformat = "%l%M%S %P";
+            }else{
+                timeformat = "%l:%M:%S %P";
+            }
         } else {
-            timeformat = "%H:%M:%S 24";
+            if ( view_props & LED_MODE ) {
+                timeformat = "%H%M%S 24";
+            }else {
+                    timeformat = "%H:%M:%S 24";
+            }
         }
     }
 
@@ -77,24 +89,29 @@ void show_led(struct tm *dateinfo)
 
     if ( view_props & TEST_MODE ) {
         do_test(dateinfo);
+	//timeformat = "%_m%d%y dt";
         return;
     }
     
     for (i = 0; i < 6; i++) {
         switch ( make_timestring(dateinfo)[i] ) {
             case ' ': bitvalues = 0x00; break;
-            case '1': bitvalues = 0x01; break;
-            case '2': bitvalues = 0x02; break;
-            case '3': bitvalues = 0x03; break;
-            case '4': bitvalues = 0x04; break;
-            case '5': bitvalues = 0x05; break;
-            case '6': bitvalues = 0x06; break;
+            case '1': bitvalues = 0x03; break;
+            case '2': bitvalues = 0x76; break; // 12456 = 0111 0110
+            case '3': bitvalues = 0x57; break; // 21406 = 0101 0111
+            case '4': bitvalues = 0x1b; break; // 1340  = 0001 1011
+            case '5': bitvalues = 0x5d; break;
+            case '6': bitvalues = 0x7d; break;
             case '7': bitvalues = 0x07; break;
-            case '8': bitvalues = 0x08; break;
-            case '9': bitvalues = 0x09; break;
-            case '0': bitvalues = 0xff; break;
+            case '8': bitvalues = 0x7f; break;
+            case '9': bitvalues = 0x1f; break;
+            case '0': bitvalues = 0x6f; break;
         }
         where[i] = bitvalues;
+    }
+    where[7] = 0x02;
+    if ( dateinfo->tm_sec % 2 == 0 ) {
+        where[7] |= 0xf0;
     }
     display();
     fflush(stdout);

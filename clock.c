@@ -1,11 +1,12 @@
 /* clock.c -- controller part of the clock project
  *
- * Darren Provine, 17 July 2009
+ * Liam Tyler, Cory Lillis, Andy Richmond, 13 April 2023
  *
- * Copyright (C) Darren Provine, 2009-2023, All Rights Reserved
+ * Copyright (C) Liam Tyler, Cory Lillis, Andy Richmond, 2009-2023, All Rights Reserved
  */
 
 #include "clock.h"
+#include <limits.h>
 
 /* CONTROLLER */
 
@@ -36,7 +37,7 @@ void usage(char *progname)
 
 // These store timestamps for when the different modes end
 int test_mode_end;
-int date_mode_end;
+int date_mode_end = INT_MAX;
 
 void process_key(keybits KeyCode)
 {
@@ -47,9 +48,8 @@ void process_key(keybits KeyCode)
     
     if ( ( KeyCode & 0xff00 ) == 0 ) {  // no ASCII code, so mouse hit
 
-        // TODO: figure out KeyRow and KeyCol
-
-        KeyRow = 0; KeyCol = 0; // right now any click goes to 24hr mode
+        KeyRow = KeyCode & 0x0f;
+        KeyCol = ( KeyCode & 0xf0 ) >> 4;
 
         if (KeyRow == 0) {
             switch (KeyCol) {
@@ -64,8 +64,15 @@ void process_key(keybits KeyCode)
                     set_view_properties (view_props);
                     break;
                 case 2:
+                    view_props = get_view_properties();
+                    view_props |= ( DATE_MODE );
+                    set_view_properties (view_props);
+                    date_mode_end = now + 5;
                     break;
                 case 3:
+		            view_props = get_view_properties();
+		            view_props |= ( TEST_MODE );
+		            set_view_properties (view_props);
                     break;
                 case 4:
                     stop_clock();
@@ -80,7 +87,7 @@ void process_key(keybits KeyCode)
     } else { // keystroke
         // figure out ASCII value from first 8 bits
         // right now any key goes to 24-hour mode
-        KeyCode = '2';
+        KeyCode >>= 8;
         switch( KeyCode ) {
             case '2':
                 view_props = get_view_properties();
@@ -159,8 +166,8 @@ int main(int argc, char *argv[])
     if (LED) { // set up the fancy display
         start_display();
         // has to be exactly 78 chars
-        set_title_bar("----------------------------"
-                      "   YOUR NAMES HERE   "
+        set_title_bar("---------------"
+                      "   Liam Tyler, Cory Lillis, Andy Richmond   "
                       "----------------------------");
         register_keyhandler(process_key);
 
@@ -198,7 +205,9 @@ void new_time(struct tm *dateinfo)
 
     // handle date mode
     if ( now > date_mode_end ) {
-        // put in code to turn off DATE bit
+        view_props = get_view_properties();
+        view_props &= ( ~ ( DATE_MODE ) );
+        set_view_properties(view_props);
     }
     if ( now > test_mode_end ) {
         // put in code to turn off TEST bit
