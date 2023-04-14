@@ -54,7 +54,6 @@ char * make_timestring (struct tm *dateinfo)
                 timeformat = "%_m%d%y dt";
             }else{
                 timeformat = "%_m/%d/%Y dt";
-                //printf( "%s", "#" );
             }
     } else {    
         if ( view_props & AMPM_MODE ) {
@@ -62,18 +61,12 @@ char * make_timestring (struct tm *dateinfo)
                 timeformat = "%l%M%S %P";
             }else{
                 timeformat = "%l:%M:%S %P";
-                //printf( "%s", "#" );
             }
         } else {
             if ( view_props & LED_MODE ) {
                 timeformat = "%H%M%S 24";
-            } else{
-		        if( view_props & TEST_MODE ) {
-			    timeformat = "80085";
-		        }
-		        else {
+            }else {
                     timeformat = "%H:%M:%S 24";
-		        }
             }
         }
     }
