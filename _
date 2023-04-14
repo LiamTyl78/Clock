@@ -70,9 +70,9 @@ void process_key(keybits KeyCode)
                     date_mode_end = now + 5;
                     break;
                 case 3:
-		            view_props = get_view_properties();
-		            view_props |= ( TEST_MODE );
-		            set_view_properties (view_props);
+		    view_props = get_view_properties();
+		    view_props |= ( TEST_MODE );
+		    set_view_properties (view_props);
                     break;
                 case 4:
                     stop_clock();
