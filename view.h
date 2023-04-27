@@ -2,7 +2,7 @@
  *
  * D Provine, 17 October 2017
  * 
- * Copyright (C) Liam Tyler, Cory Lillis, Andy Richmond, 2009-2023, All Rights Reserved
+ * Copyright (C) Darren Provine, 2009-2023, All Rights Reserved
  */
 
 /* VIEW OPTIONS

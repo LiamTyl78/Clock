@@ -2,7 +2,7 @@
  *
  * Liam Tyler, Cory Lillis, Andy Richmond, 13 April 2023
  *
- * Copyright (C) Liam Tyler, Cory Lillis, Andy Richmond, 2009-2023, All Rights Reserved
+ * Copyright (C) Darren Provine, 2009-2023, All Rights Reserved
  */
 
 #include <sys/time.h>

@@ -2,7 +2,7 @@
  *
  * Liam Tyler, Cory Lillis, Andy Richmond, 14 August 2009
  *
- * Copyright (C) Liam Tyler, Cory Lillis, Andy Richmond, 2009-2023, All Rights Reserved
+ * Copyright (C) Darren Provine, 2009-2023, All Rights Reserved
  */
 
 #include <string.h>
